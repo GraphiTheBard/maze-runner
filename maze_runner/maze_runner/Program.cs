@@ -174,6 +174,7 @@ public class Program
 
 
         int[,] adjMat = new int[count, count];
+        int distance, dec, node;
 
         for (int i = 0; i < count; i++)
         {
@@ -195,6 +196,88 @@ public class Program
 
                 if (nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY + 1] >= 0) //right adjacent
                     adjMat[nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY], nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY + 1]] = 1;
+
+
+                //path adjacent (distance = no.of 0s + 1)
+                if (nodeMatrix[graphNode[i].nodeX - 1, graphNode[i].nodeY] == -1)//top adjacent path
+                {
+                    distance = 1;
+                    dec = 1;
+                    while (nodeMatrix[graphNode[i].nodeX - dec, graphNode[i].nodeY] == -1)
+                    {
+                        distance++;
+                        dec++;
+                    }
+
+                    node = nodeMatrix[graphNode[i].nodeX - dec, graphNode[i].nodeY];
+
+                    if (adjMat[node, nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY]] == 0)
+                    {
+
+                        adjMat[nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY], node] = distance;
+                    }
+
+                }
+
+                if (nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY - 1] == -1)//left adjacent path
+                {
+                    distance = 1;
+                    dec = 1;
+                    while (nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY - dec] == -1)
+                    {
+                        distance++;
+                        dec++;
+                    }
+
+                    node = nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY - dec];
+
+                    if (adjMat[node, nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY]] == 0)
+                    {
+                        adjMat[nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY], node] = distance;
+                    }
+                }
+
+
+                if (nodeMatrix[graphNode[i].nodeX + 1, graphNode[i].nodeY] == -1)//bottom adjacent path
+                {
+                    distance = 1;
+                    dec = 1;
+                    while (nodeMatrix[graphNode[i].nodeX + dec, graphNode[i].nodeY] == -1)
+                    {
+                        distance++;
+                        dec++;
+                        Console.WriteLine(distance + " dec:" + dec);
+                    }
+
+                    node = nodeMatrix[graphNode[i].nodeX + dec, graphNode[i].nodeY];
+
+                    if (adjMat[node, nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY]] == 0)
+                    {
+                        adjMat[nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY], node] = distance;
+                    }
+
+                }
+
+                if (nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY + 1] == -1)//right adjacent path
+                {
+                    distance = 1;
+                    dec = 1;
+                    while (nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY + dec] == -1)
+                    {
+                        distance++;
+                        dec++;
+                    }
+                    node = nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY + dec];
+
+                    if (adjMat[node, nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY]] == 0)
+                    {
+                        adjMat[nodeMatrix[graphNode[i].nodeX, graphNode[i].nodeY], node] = distance;
+                    }
+                }
+
+
+
+
             }
 
 
@@ -222,7 +305,7 @@ public class Program
         {
             for (int j = 0; j < count; j++)
             {
-                Console.Write(adjMat[i, j] + "\t");
+                Console.Write(adjMat[i, j] + " ");
 
             }
             Console.Write("\n");
